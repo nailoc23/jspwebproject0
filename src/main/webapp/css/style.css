@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+body {
+	background-color: #FFCCAA;
+}
+.wrapper {
+	width: 1200px;
+	border: 1px dotted red;
+	margin: 0 auto;
+	background-color: #ffffff;
+}
+header {
+	height: 240px;
+}
+.top {
+	height: 40px;
+	background-color: #666666;
+}
+ul.topmenu {
+	width: 200px;
+	float: right;
+	margin: 0;
+	list-style-type: none;
+	padding-left: 0;
+}
+ul.topmenu li {	
+	float: left;
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #ffffff;
+}
+ul.topmenu li a {
+	text-decoration: none;
+	color: #ffffff;
+}
+.logo {
+	height: 160px;
+	background-color: aqua;
+}
+.logo h1 {
+	text-align: center;
+	margin: 0;
+	height: 160px;
+	line-height: 160px;
+	
+}
+nav {
+	height: 40px;
+	background-color:cadetblue;
+}
+ul.menu {
+	margin: 0;
+	list-style-type: none;
+	height: 40px;
+	
+	width: 900px;
+	margin: 0 auto;
+}
+ul.menu li {
+	float: left;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	background-color: cornflowerblue;
+	text-align: center;
+}
+
+/*회원가입 디자인*/
+.main_content h2 {
+	text-align: center;
+}
+.main_content form {
+	width: 1000px;
+	margin: 100px auto;
+}
+.join_table {
+	width: 100%;
+	border-top: 1px solid #000000;
+	margin-bottom: 30px;
+}
+.join_table tr {
+	height: 40px;
+	border-bottom: 1px solid darkgray;
+}
+td.join_tag {
+	width: 200px;
+	font-weight: bold;
+}
+
+.id_check_msg {
+	color: blue;
+}
+
+.join_table tr input[type=text], 
+input[type=password] {
+	border: 1px solid #666666;	
+	padding: 0px 5px;
+}
+.join_bths {
+	text-align: center;
+}
+.join_bths input, .join_inner_btn {
+	width: 150px;
+	border: none;
+	background-color: #666666;
+	color: #ffffff;
+	padding: 5px 3px;
+	cursor: pointer;
+}
+
+/*푸터영역*/
+footer {
+	background-color: #3355ff;
+	color: #ffffff;
+	height: 60px;
+	line-height: 60px;
+}
+footer address {
+	text-align: center;
+}
+footer address span {
+	color: deeppink;
+}
