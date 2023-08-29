@@ -190,8 +190,33 @@ public class MemberDao {
 			System.out.println("getMemberById 쿼리에러: " + se.getMessage());
 		}
 		
+		closeConn();
 		return rstvo;
 		
+	}
+	
+	// 사용자 정보를 수정
+	public int modifyMember(MemberVo tempvo) {
+		System.out.println("사용자 정보를 수정");
+		int rst = 0;
+		
+		getConnect();
+		
+		try {
+			String sql = "UPDATE MEMBER SET name=?, email=?, phone=? WHERE id=? AND pwd=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tempvo.getName());
+			pstmt.setString(2, tempvo.getEmail());
+			pstmt.setString(3, tempvo.getPhone());
+			pstmt.setString(4, tempvo.getId());			
+			pstmt.setString(5, tempvo.getPwd());
+			rst = pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("modifyMember 쿼리에러: " + se.getMessage());
+		}
+		
+		closeConn();
+		return rst;
 	}
 
 }

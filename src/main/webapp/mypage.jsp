@@ -65,7 +65,7 @@
 	<!-- 메인영역 -->
 	<div class="main_content">
 	
-		<form action="loginpro.jsp" method="POST">
+		<form action="mypagemod.jsp" method="POST">
 		
 		<h2>마이페이지</h2>
 		<h3>개인 정보 확인</h3>
