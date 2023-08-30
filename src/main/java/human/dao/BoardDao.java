@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
+
 public class BoardDao {
 	
 	public static String user = "jsp";
@@ -41,11 +43,33 @@ public class BoardDao {
 	}
 	
 	// 게시판 전체 목록 가져오기
-	public int getBoardListAll() {
+	public ArrayList<BoardVo> getBoardListAll() {		
 		
-		int rst = 3; // 만약에 게시판 목록 갯수 3
+		System.out.println("게시판 전체 목록 가져오기");
+		ArrayList<BoardVo> boardList = new ArrayList<BoardVo>();
 		
-		return rst;
+		getConnect();
+		
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT no, subject, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate, hit FROM bo_notice";
+			rs = stmt.executeQuery(sql);
+			while(rs.next() ) {
+				BoardVo tempvo = new BoardVo();
+				tempvo.setNo(rs.getInt("no"));
+				tempvo.setSubject(rs.getString("subject"));
+				tempvo.setRegdate(rs.getString("regdate"));
+				tempvo.setHit(rs.getInt("hit"));
+				
+				boardList.add(tempvo);
+			}
+		}catch(SQLException se) {
+			System.out.println("getBoardListAll 쿼리에러: " + se.getMessage());
+		}
+		
+		closeConn(); // 항상 반환 처리 빼먹지 않도록 기억
+		
+		return boardList;
 	}
 
 }

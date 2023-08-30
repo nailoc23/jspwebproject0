@@ -78,7 +78,7 @@ ul.menu li {
 }
 .board_table {
 	width: 100%;
-	margin: 0 auto;
+	margin: 20px auto;
 	border-collapse: collapse;
 }
 .post_num {
@@ -101,6 +101,52 @@ ul.menu li {
 
 tbody tr {
 	border-bottom: 1px solid #cccccc;
+}
+
+.board_btns {
+	width: 100%;
+}
+.search {
+	/*border: 1px solid red;*/
+	width: 300px;
+	float: right;
+	margin: 20px 0;
+}
+.search_box {
+	height: 30px;
+}
+.search_btn {
+	height: 30px;
+	border: none;
+	background-color: #111111;
+	color: #eeeeee;
+	border-radius: 5px;
+}
+
+.board_pages {
+	clear: both;
+	width: 100%;
+	list-style-type: none;
+	text-align: center;
+}
+.board_pages li {
+	display: inline-block;
+	width: 30px;
+}
+.board_page a,
+.board_left a,
+.board_right a {
+	text-decoration: none;
+	color: black;
+	width: 30px;
+	text-align: center;
+	line-height: 30px;
+	font-size: 20px;
+}
+.board_page a.active {
+	background-color: #111111;
+	color: white;
+	display: inline-block;
 }
 
 /*푸터영역*/
