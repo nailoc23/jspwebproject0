@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="human.dao.BoardDao" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/board.css">
 </head>
 <body>
 <% 
@@ -49,38 +50,52 @@
 		
 		
 	<!-- 메인영역 -->
-	<div class="main_content">
-	
-		<form action="loginpro.jsp" method="POST">
+	<div class="main_wrap">
 		
-		<h2>로 그 인</h2>
-		<h3>로그인 정보입력</h3>
-		<table class="join_table"> 
-			
-			<tr>
-				<td class="join_tag">아이디</td>
-				<td>
-					<input class="userid" type="text" name="memid">								
-				</td>
-			</tr>
-			
-			<tr>
-				<td class="join_tag">비밀번호</td>
-				<td>
-					<input class="pass1" type="password" name="mempw">						
-				</td>
-			</tr>	
-		</table>		
+		<div class="sub_banner">
+			<h2>고객센터</h2>
+		</div>
 		
-		<div class="join_bths">
-			<input type="submit" value="로 그 인">
-			<input type="button" value="회 원 가 입" onclick="location.href='join.jsp'">
-		</div>		
+		<div class="content_wrap">
+		
+			<h2> # 공지사항</h2>
+			<table class="board_table"> 
 				
-		</form>
-		
-		
-	</div>
+				<thead>
+				<tr>
+					<th class="post_num">번호</th>
+					<th>제목</th>
+					<th class="post_date">작성일</th>
+					<th class="post_view">조회수</th>
+				</tr>
+				</thead>
+				
+				<tbody>
+				
+			<%
+				BoardDao bbsdao = new BoardDao();
+				int result = bbsdao.getBoardListAll();
+				
+				for(int i=0; i<result; i++) {
+			%>
+					
+				<tr class="post">
+					<td class="post_num">11</td>
+					<td>공지글테스트1</td>
+					<td class="post_date">2023-01-03</td>
+					<td class="post_view">100</td>
+				</tr>
+           <%				
+				}
+			%>
+				
+				
+				</tbody>
+			</table>
+			
+		</div>
+
+</div>
 		
 		
 	<!-- 푸터영역 -->

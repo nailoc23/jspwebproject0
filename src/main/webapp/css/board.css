@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+body {
+	background-color: #FFCCAA;
+}
+.wrapper {
+	width: 1200px;
+	border: 1px dotted red;
+	margin: 0 auto;
+	background-color: #ffffff;
+}
+header {
+	height: 240px;
+}
+.top {
+	height: 40px;
+	background-color: #666666;
+}
+ul.topmenu {
+	width: 200px;
+	float: right;
+	margin: 0;
+	list-style-type: none;
+	padding-left: 0;
+}
+ul.topmenu li {	
+	float: left;
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #ffffff;
+}
+ul.topmenu li a {
+	text-decoration: none;
+	color: #ffffff;
+}
+.logo {
+	height: 160px;
+	background-color: aqua;
+}
+.logo h1 {
+	text-align: center;
+	margin: 0;
+	height: 160px;
+	line-height: 160px;
+	
+}
+nav {
+	height: 40px;
+	background-color:cadetblue;
+}
+ul.menu {
+	margin: 0;
+	list-style-type: none;
+	height: 40px;
+	
+	width: 900px;
+	margin: 0 auto;
+}
+ul.menu li {
+	float: left;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	background-color: cornflowerblue;
+	text-align: center;
+}
+
+/*게시판 디자인*/
+.main_wrap .sub_banner h2 {
+	text-align: center;
+}
+
+.content_wrap {
+	width: 1000px;
+	margin: 0 auto;
+}
+.board_table {
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.post_num {
+	width: 10%;
+	text-align: center;
+}
+.post_date {
+	width: 20%;
+	text-align: center;
+}
+.post_view {
+	width: 10%;
+	text-align: center;
+}
+
+.board_table thead {
+	border-top: 2px solid #666666;
+	border-bottom: 1px solid #999999;
+}
+
+tbody tr {
+	border-bottom: 1px solid #cccccc;
+}
+
+/*푸터영역*/
+footer {
+	background-color: #3355ff;
+	color: #ffffff;
+	height: 60px;
+	line-height: 60px;
+}
+footer address {
+	text-align: center;
+}
+footer address span {
+	color: deeppink;
+}
