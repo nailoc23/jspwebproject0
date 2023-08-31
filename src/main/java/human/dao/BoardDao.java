@@ -52,7 +52,7 @@ public class BoardDao {
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = "SELECT no, subject, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate, hit FROM bo_notice";
+			String sql = "SELECT no, subject, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate, hit FROM bo_notice ORDER BY no DESC";
 			rs = stmt.executeQuery(sql);
 			while(rs.next() ) {
 				BoardVo tempvo = new BoardVo();
@@ -70,6 +70,29 @@ public class BoardDao {
 		closeConn(); // 항상 반환 처리 빼먹지 않도록 기억
 		
 		return boardList;
+	}
+	
+	// 게시판 글을 등록하기
+	public int regBoard(BoardVo tempvo) {
+		
+		System.out.println("게시판 전체 목록 가져오기");
+		int rst = 0;
+		
+		getConnect();
+		
+		try {
+			String sql = "INSERT INTO BO_NOTICE (no, groupno, id, writer, subject, content) VALUES (BO_NOTICE_SEQ.NEXTVAL, BO_NOTICE_SEQ.CURRVAL, 'admin', ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+		    pstmt.setString(1, tempvo.getWriter());
+			pstmt.setString(2, tempvo.getSubject());
+			pstmt.setString(3, tempvo.getContent());
+			rst = pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println("regBoard 쿼리에러: " + se.getMessage());
+		}
+		
+		closeConn();
+		return rst;
 	}
 
 }
