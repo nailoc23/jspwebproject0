@@ -88,7 +88,7 @@
                                     <div class="spur-card-title"> 글쓰기 </div>
                                 </div>
                                 <div class="card-body ">
-                                    <form action="mng_bbswrtpro.jsp">
+                                    <form action="mng_bbswrtpro.jsp" method="POST" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">작성자</label>
                                             <input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="관리자">
@@ -102,6 +102,12 @@
                                             <label for="exampleFormControlTextarea1">글내용</label>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">첨부파일</label>
+                                            <input type="file" class="form-control" id="exampleFormControlInput1" name="filename">
+                                        </div>
+                                        
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </form>
                                 </div>
