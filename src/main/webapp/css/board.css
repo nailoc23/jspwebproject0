@@ -2,12 +2,15 @@
 
 body {
 	background-color: #FFCCAA;
+	min-height: 100%;
 }
 .wrapper {
 	width: 1200px;
 	border: 1px dotted red;
 	margin: 0 auto;
 	background-color: #ffffff;
+	min-height: 100vh;
+	position: relative;
 }
 header {
 	height: 240px;
@@ -81,6 +84,10 @@ ul.menu li {
 	margin: 20px auto;
 	border-collapse: collapse;
 }
+.post_title {
+	background-color: #111111;
+	color: white;
+}
 .post_num {
 	width: 10%;
 	text-align: center;
@@ -112,6 +119,20 @@ tbody tr {
 	float: right;
 	margin: 20px 0;
 }
+.control {
+	width: 300px;
+	float: right;
+	margin: 20px 0;
+}
+.control_btn {
+	height: 30px;
+	border: none;
+	background-color: #111111;
+	color: #eeeeee;
+	border-radius: 5px;
+	float: right;
+	cursor: pointer;
+}
 .search_box {
 	height: 30px;
 }
@@ -121,6 +142,7 @@ tbody tr {
 	background-color: #111111;
 	color: #eeeeee;
 	border-radius: 5px;
+	cursor: pointer;
 }
 
 .board_pages {
@@ -156,6 +178,10 @@ footer {
 	color: #ffffff;
 	height: 60px;
 	line-height: 60px;
+	clear: both;
+	position: absolute;
+	bottom: 0;
+	width: 1200px;
 }
 footer address {
 	text-align: center;
