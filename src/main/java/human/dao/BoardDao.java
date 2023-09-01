@@ -120,5 +120,34 @@ public class BoardDao {
 		
 		return (rst+rst2);
 	}
+	
+	// 글읽기 정보 가져오기
+	public BoardVo readBoardByNo(String no) {
+		System.out.println("글읽기 정보 가져오기");
+		BoardVo rst = new BoardVo();
+		
+		getConnect();
+		
+		try {
+			String sql = "SELECT no, writer, email, hp, subject, content, hit, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate FROM BO_NOTICE WHERE no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.valueOf(no));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				rst.setNo(rs.getInt("no"));
+				rst.setWriter(rs.getString("writer"));
+				rst.setEmail(rs.getString("email"));
+				rst.setHp(rs.getString("hp"));
+				rst.setSubject(rs.getString("subject"));
+				rst.setContent(rs.getString("content"));				
+				rst.setHit(rs.getInt("hit"));
+				rst.setRegdate(rs.getString("regdate"));
+			}
+		}catch(SQLException se) {
+			System.out.println("readBoardByNo 쿼리에러: " + se.getMessage());	
+		}
+		
+		return rst;
+	}
 
 }

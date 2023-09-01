@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="human.dao.BoardDao" %>
+<%@ page import="human.vo.BoardVo" %>  
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +51,14 @@
 		</nav>
 	</header>
 		
+	<%
+		String no = request.getParameter("no"); 
+		BoardVo tempvo = new BoardVo();
+		BoardDao bbsdao = new BoardDao();
+		
+		tempvo = bbsdao.readBoardByNo(no);
+		
+	%>
 		
 	<!-- 메인영역 -->
 	<div class="main_wrap">
@@ -70,29 +81,29 @@
 				<tbody>
 				<tr>
 					<th class="post_writer">작성자</th>
-					<td>관리자</td>
+					<td><%= tempvo.getWriter() %></td>
 					
 					<th class="post_date">작성일</th>
-					<td>2022-01-01</td>
+					<td><%= tempvo.getRegdate() %></td>
 					
 					<th class="post_view">조회수</th>
-					<td>100</td>
+					<td><%= tempvo.getHit() %></td>
 					
 				</tr>
 				<tr>
 					<th class="post_email">이메일</th>
-					<td colspan="2">test@naver.com</td>
+					<td colspan="2"><%= tempvo.getEmail() %></td>
 					<th class="post_date">연락처</th>
-					<td colspan="2">010-9999-0000</td>
+					<td colspan="2"><%= tempvo.getHp() %></td>
 				</tr>
 				
 				<tr>
 					<th class="post_subject">제목</th>
-					<td colspan="5">공지테스트1</td>
+					<td colspan="5"><%= tempvo.getSubject() %></td>
 				</tr>
 				<tr>
 					<th class="post_content">내용</th>
-					<td colspan="5">공지내용</td>
+					<td colspan="5"><%= tempvo.getContent() %></td>
 				</tr>
 				<tr>
 					<th class="post_file">첨부파일</th>
