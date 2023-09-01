@@ -48,12 +48,15 @@
 		tempvo.setWriter(writer);
 		tempvo.setSubject(subject);
 		tempvo.setContent(content);
+		tempvo.setFilename(filename);
 		
 		BoardDao bbsdao = new BoardDao();
 		int result = bbsdao.regBoard(tempvo);
 		
-		//out.println("등록결과: " + result);
-		if(result==1) {
+		// 두개의 쿼리 결과가 2면 성공
+		out.println("등록결과: " + result);
+		
+		if(result==2) {
 			out.println("<script>alert('게시글 등록 완료');</script>");
 			out.println("<script>location.href='mng_bbswrite.html';</script>");
 		}

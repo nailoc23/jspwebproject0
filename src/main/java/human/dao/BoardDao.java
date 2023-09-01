@@ -20,6 +20,7 @@ public class BoardDao {
 	public static Connection conn = null;
 	public static Statement stmt = null;
 	public static PreparedStatement pstmt = null;
+	public static PreparedStatement pstmt2 = null;
 	public static ResultSet rs = null;
 	
 	public void getConnect() {		
@@ -37,6 +38,7 @@ public class BoardDao {
 			if(stmt!=null) stmt.close();
 			if(rs!=null) rs.close();
 			if(pstmt!=null) pstmt.close();
+			if(pstmt2!=null) pstmt2.close();
 		}catch(SQLException se) {
 			System.out.println("오라클닫기에게: " + se.getMessage());
 		}
@@ -76,23 +78,47 @@ public class BoardDao {
 	public int regBoard(BoardVo tempvo) {
 		
 		System.out.println("게시판 전체 목록 가져오기");
-		int rst = 0;
+		int rst = 0; // 0 실패 1성공
+		int rst2 = 0; // 동일
 		
 		getConnect();
 		
 		try {
 			String sql = "INSERT INTO BO_NOTICE (no, groupno, id, writer, subject, content) VALUES (BO_NOTICE_SEQ.NEXTVAL, BO_NOTICE_SEQ.CURRVAL, 'admin', ?, ?, ?)";
+			conn.setAutoCommit(false); // 쿼리를 실행하고 나서 아직 컴밋은 하지 말라 
+			
 			pstmt = conn.prepareStatement(sql);
 		    pstmt.setString(1, tempvo.getWriter());
 			pstmt.setString(2, tempvo.getSubject());
 			pstmt.setString(3, tempvo.getContent());
 			rst = pstmt.executeUpdate();
+			
+			// 다른 작업이 있음
+			String sql2 = "INSERT INTO BO_NOTICE_FILE (no, filename, bno)  VALUES (BO_NOTICE_FILE_SEQ.NEXTVAL, ?, BO_NOTICE_SEQ.CURRVAL)";
+			pstmt2  = conn.prepareStatement(sql2);
+			pstmt2.setString(1, tempvo.getFilename());
+			rst2 = pstmt2.executeUpdate();
+			
+			conn.commit();
+			
+			
 		}catch(SQLException se) {
-			System.out.println("regBoard 쿼리에러: " + se.getMessage());
+			System.out.println("regBoard 쿼리에러: " + se.getMessage());			
+			// 만약 쿼리가 에러가 나면 롤백
+			try {
+				if(conn!=null) {
+					conn.rollback();
+				}
+			}catch(Exception e) {
+				System.out.println("regBoard 롤백에러: " + e.getMessage());	
+			}
+		}finally {
+			// 에러가 나든 안 나든 정리할 건 마무리 하시오
+			closeConn();
 		}
 		
-		closeConn();
-		return rst;
+		
+		return (rst+rst2);
 	}
 
 }

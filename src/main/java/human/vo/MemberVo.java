@@ -10,7 +10,7 @@ public class MemberVo {
 //  address 
 //  address2 
 	private String phone;
-	
+		
 	public String getId() {
 		return id;
 	}
@@ -41,6 +41,5 @@ public class MemberVo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
 	
 }

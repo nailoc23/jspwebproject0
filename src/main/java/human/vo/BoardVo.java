@@ -11,6 +11,9 @@ public class BoardVo {
     private String content; 
     private int hit;
     private String regdate;
+	// 첨부파일 1개 인 경우
+	private String filename;
+    
 	public int getNo() {
 		return no;
 	}
@@ -70,6 +73,13 @@ public class BoardVo {
 	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+	
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
     
     
