@@ -94,10 +94,12 @@ public class BoardDao {
 			rst = pstmt.executeUpdate();
 			
 			// 다른 작업이 있음
-			String sql2 = "INSERT INTO BO_NOTICE_FILE (no, filename, bno)  VALUES (BO_NOTICE_FILE_SEQ.NEXTVAL, ?, BO_NOTICE_SEQ.CURRVAL)";
-			pstmt2  = conn.prepareStatement(sql2);
-			pstmt2.setString(1, tempvo.getFilename());
-			rst2 = pstmt2.executeUpdate();
+			if(tempvo.getFilename()!=null) { // 첨부파일 있는 경우만
+				String sql2 = "INSERT INTO BO_NOTICE_FILE (no, filename, bno)  VALUES (BO_NOTICE_FILE_SEQ.NEXTVAL, ?, BO_NOTICE_SEQ.CURRVAL)";
+				pstmt2  = conn.prepareStatement(sql2);
+				pstmt2.setString(1, tempvo.getFilename());
+				rst2 = pstmt2.executeUpdate();
+			}
 			
 			conn.commit();
 			
@@ -143,8 +145,17 @@ public class BoardDao {
 				rst.setHit(rs.getInt("hit"));
 				rst.setRegdate(rs.getString("regdate"));
 			}
+			
+			// 조회수를 업데이트는 하는 쿼리
+			String sql2 = "UPDATE BO_NOTICE SET hit = hit+1 WHERE no = ?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setInt(1,  Integer.valueOf(no));
+			pstmt2.executeUpdate();
+			
 		}catch(SQLException se) {
 			System.out.println("readBoardByNo 쿼리에러: " + se.getMessage());	
+		}finally {
+			closeConn();
 		}
 		
 		return rst;

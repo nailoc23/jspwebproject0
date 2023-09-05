@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="human.dao.BoardDao" %>
+<%@ page import="human.vo.BoardVo" %>
+<%@ page import="human.dao.FilesDao" %>
+<%@ page import="human.vo.FilesVo" %>       
+    
 <!doctype html>
 <html lang="en">
 
@@ -75,6 +82,19 @@
                     </div>
                 </div>
             </header>
+            
+            <%
+				String no = request.getParameter("no");
+			
+				BoardVo tempvo = new BoardVo();
+				BoardDao bbsdao = new BoardDao();		
+				tempvo = bbsdao.readBoardByNo(no);
+				
+				FilesVo filesvo = new FilesVo();
+				FilesDao filedao = new FilesDao();
+				filesvo = filedao.readFilesByNo(no);
+				
+			%>
             <main class="dash-content">
                 <div class="container-fluid">
                     <h1 class="dash-title">공지사항</h1>
@@ -85,30 +105,55 @@
                                     <div class="spur-card-icon">
                                         <i class="fas fa-chart-bar"></i>
                                     </div>
-                                    <div class="spur-card-title"> 글쓰기 </div>
+                                    <div class="spur-card-title"> 글읽기 </div>
                                 </div>
                                 <div class="card-body ">
                                     <form action="mng_bbswrtpro.jsp" method="POST" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">작성자</label>
-                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="관리자">
-                                        </div>
+                                    	
+                                        <div class="form-row">                                       
+	                                        <div class="form-group col-md-4">
+	                                            <label for="exampleFormControlInput1">작성자</label>
+	                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="<%= tempvo.getWriter() %>" readonly="readonly">
+	                                        </div>
+	                                        <div class="form-group col-md-4">
+	                                            <label for="exampleFormControlInput1">작성일</label>
+	                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="regdate" value="<%= tempvo.getRegdate() %>" readonly="readonly">
+	                                        </div>
+	                                        <div class="form-group col-md-4">
+	                                            <label for="exampleFormControlInput1">조회수</label>
+	                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="hit" value="<%= tempvo.getHit() %>" readonly="readonly">
+	                                        </div>
+	                                    </div>                                             
+                                        
+                                        <div class="form-row"> 
+	                                        <div class="form-group col-md-6">
+	                                            <label for="exampleFormControlInput1">이메일</label>
+	                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="<%= tempvo.getEmail() %>">
+	                                        </div>
+	                                        <div class="form-group col-md-6">
+	                                            <label for="exampleFormControlInput1">전화번호</label>
+	                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="phone" value="<%= tempvo.getHp() %>">
+	                                        </div>
+	                                    </div>    
+	                                        
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">제목</label>
-                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject">
+                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="<%= tempvo.getSubject() %>">
                                         </div>
                                         
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">글내용</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"><%= tempvo.getContent() %></textarea>                                           
                                         </div>
                                         
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">첨부파일</label>
+                                            <br><%= filesvo.getFilename() %> &nbsp; &nbsp; <button type="button" class="btn btn-primary">파일삭제</button>
                                             <input type="file" class="form-control" id="exampleFormControlInput1" name="filename">
                                         </div>
                                         
-                                        <button type="submit" class="btn btn-primary">글등록</button>
+                                        <button type="submit" class="btn btn-primary">글수정</button>
+                                        <button type="button" class="btn btn-primary" onclick="del_bbs();">글삭제</button>
                                         <button type="button" class="btn btn-primary" onclick="location.href='mng_board.jsp'">목록</button>
                                     </form>
                                 </div>
@@ -120,6 +165,16 @@
         </div>
     </div>
     <script src="../js/admin.js"></script>
+    <script>
+    	function del_bbs() {
+    		ok = confirm('해당글을 삭제하시겠습니까?');
+    		if(ok==true) {
+    			location.href='mng_bbsdel.jsp';
+    		}else{
+    			alert('삭제 취소되었습니다!');
+    		}
+    	}
+    </script>
 </body>
 
 </html>

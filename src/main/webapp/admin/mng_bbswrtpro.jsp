@@ -57,8 +57,11 @@
 		out.println("등록결과: " + result);
 		
 		if(result==2) {
-			out.println("<script>alert('게시글 등록 완료');</script>");
+			out.println("<script>alert('게시글 등록 및 첨부 등록 완료');</script>");
 			out.println("<script>location.href='mng_bbswrite.html';</script>");
+		}else if( result==1) {
+			out.println("<script>alert('게시글 등록 완료');</script>");
+			out.println("<script>location.href='mng_bbswrite.html';</script>");			
 		}
 		
 		

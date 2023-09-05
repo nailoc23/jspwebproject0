@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>    
+    
+<%@ page import="human.dao.BoardDao" %>
+<%@ page import="human.vo.BoardVo" %>     
+    
 <!doctype html>
 <html lang="en">
 
@@ -80,39 +87,53 @@
                     <h1 class="dash-title">공지사항</h1>
                     <div class="row">
                         <div class="col-xl-12">
+                            
                             <div class="card spur-card">
                                 <div class="card-header">
                                     <div class="spur-card-icon">
-                                        <i class="fas fa-chart-bar"></i>
+                                        <i class="fas fa-table"></i>
                                     </div>
-                                    <div class="spur-card-title"> 글쓰기 </div>
+                                    <div class="spur-card-title">글목록</div>
                                 </div>
                                 <div class="card-body ">
-                                    <form action="mng_bbswrtpro.jsp" method="POST" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">작성자</label>
-                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="관리자">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">제목</label>
-                                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject">
-                                        </div>
+                                    <table class="table table-hover table-in-card">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">제목</th>
+                                                <th scope="col">작성일</th>
+                                                <th scope="col">조회수</th>
+                                            </tr>
+                                        </thead>
                                         
-                                        <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">글내용</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">첨부파일</label>
-                                            <input type="file" class="form-control" id="exampleFormControlInput1" name="filename">
-                                        </div>
-                                        
-                                        <button type="submit" class="btn btn-primary">글등록</button>
-                                        <button type="button" class="btn btn-primary" onclick="location.href='mng_board.jsp'">목록</button>
-                                    </form>
+                                        <tbody>
+                                        <%
+											BoardDao bbsdao = new BoardDao();
+											ArrayList<BoardVo> result = bbsdao.getBoardListAll();
+											//out.println(result.size());
+											for(int i=0; i<result.size(); i++) {
+												BoardVo eachvo = result.get(i);
+										%>
+                                                                                                                      
+                                            <tr>
+                                                <th scope="row"><%= eachvo.getNo() %></th>
+                                                <td><a href="mng_bbsread.jsp?no=<%= eachvo.getNo() %>"><%= eachvo.getSubject() %></a></td>
+                                                <td><%= eachvo.getRegdate() %></td>
+                                                <td><%= eachvo.getHit() %></td>
+                                            </tr>
+                                        <%
+											}
+                                        %>  
+                                            
+                                        </tbody>
+                                    </table>
+                
                                 </div>
+                                
                             </div>
+
+                            <button type="button" class="btn btn-primary" onclick="location.href='mng_bbswrite.html'">글쓰기</button>
+                            
                         </div> <!--  put your rows / columns here -->
                     </div>
                 </div>
