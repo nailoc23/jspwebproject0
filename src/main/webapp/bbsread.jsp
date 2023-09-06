@@ -54,6 +54,7 @@
 	</header>
 		
 	<%
+		String curPage = request.getParameter("page");
 		String no = request.getParameter("no");
 	
 		BoardVo tempvo = new BoardVo();
@@ -120,7 +121,8 @@
 			</table>
 			
 			<div class="board_btns">
-				<form class="control" action="board.jsp" method="GET">									
+				<form class="control" action="board.jsp" method="GET">	
+					<input type="hidden" name="page" value="<%= curPage %>">								
 					<input class="control_btn" type="submit" value="목록">
 				</form>
 			</div>		

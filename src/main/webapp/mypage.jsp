@@ -54,7 +54,7 @@
 				<li>HOME</li>
 				<li>소개</li>
 				<li>클래스</li>
-				<li>고객센터</li>
+				<li><a href="board.jsp?page=1">고객센터</a></li>
 				<li>MYPAGE</li>
 				<li>관리자</li>
 			</ul>

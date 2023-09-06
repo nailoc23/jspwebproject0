@@ -228,5 +228,36 @@ public class BoardDao {
 		
 		return rst;
 	}
+	
+	// 
+	public ArrayList<BoardVo> searchBoard(String keyword) {
+		System.out.println("게시판 검색 결과 출력하기");
+		
+		ArrayList<BoardVo> boardList = new ArrayList<BoardVo>();
+		
+		getConnect();
+		
+		try {
+			String sql = "SELECT no, subject, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate, hit FROM bo_notice WHERE subject like '%'||?||'%' ORDER BY no DESC";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+			while(rs.next() ) {
+				BoardVo tempvo = new BoardVo();
+				tempvo.setNo(rs.getInt("no"));
+				tempvo.setSubject(rs.getString("subject"));
+				tempvo.setRegdate(rs.getString("regdate"));
+				tempvo.setHit(rs.getInt("hit"));
+				
+				boardList.add(tempvo);
+			}
+		}catch(SQLException se) {
+			
+		}finally {
+			closeConn();
+		}
+		
+		return boardList;
+	}
 
 }

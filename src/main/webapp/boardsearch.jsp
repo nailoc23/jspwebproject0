@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ page import="java.util.ArrayList" %>    
     
 <%@ page import="human.dao.BoardDao" %>
-<%@ page import="human.vo.BoardVo" %>        
+<%@ page import="human.vo.BoardVo" %>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,6 +68,9 @@
 				
 				<thead>
 				<tr>
+					<th colspan="4" class="post_title">게시글 검색결과</th>
+				</tr>
+				<tr>
 					<th class="post_num">번호</th>
 					<th>제목</th>
 					<th class="post_date">작성일</th>
@@ -74,26 +79,26 @@
 				</thead>
 				
 				<tbody>
+	
+				<%
+					String keyWord = request.getParameter("keyword");
 				
-			<%
-				String curPage = request.getParameter("page");
-				BoardDao bbsdao = new BoardDao();
-				ArrayList<BoardVo> result = bbsdao.getBoardListAll(curPage);
-				//out.println(result.size());
-				for(int i=0; i<result.size(); i++) {
-					BoardVo eachvo = result.get(i);
-			%>
+					BoardDao bbsdao = new BoardDao();
+					ArrayList<BoardVo> result = bbsdao.searchBoard(keyWord);
+					/* out.println("검색어는: " + keyWord); */
+					for(int i=0; i<result.size(); i++) {
+						BoardVo eachvo = result.get(i);
+				%>
 					
-				<tr class="post">
-					<td class="post_num"><%= eachvo.getNo() %></td>
-					<td><a href="bbsread.jsp?page=<%=curPage%>&no=<%= eachvo.getNo() %>"><%= eachvo.getSubject() %></a></td>
-					<td class="post_date"><%= eachvo.getRegdate() %></td>
-					<td class="post_view"><%= eachvo.getHit() %></td>
-				</tr>
-           <%				
-				}
-			%>
-				
+					<tr class="post">
+						<td class="post_num"><%= eachvo.getNo() %></td>
+						<td><a href="bbsread.jsp?no=<%= eachvo.getNo() %>"><%= eachvo.getSubject() %></a></td>
+						<td class="post_date"><%= eachvo.getRegdate() %></td>
+						<td class="post_view"><%= eachvo.getHit() %></td>
+					</tr>
+           		<%				
+					}
+				%>
 				
 				</tbody>
 			</table>
@@ -110,34 +115,9 @@
 				</form>
 			</div>
 			
-			<ul class="board_pages">
-				<li class="board_left"><a href="#">&#10094;</a></li>
-				
-			<%
-				int cntperpage = 10;
-				int totpage = bbsdao.calTotPage();
-				for(int i=1; i<=totpage; i++) {
-					
-					if(i== Integer.valueOf(curPage)) {
-			%>
-					<li class='board_page'><a href='board.jsp?page=<%=i %>' class='active'><%=i %></a></li>
-			<%
-					}else{
-			%>
-					<li class='board_page'><a href='board.jsp?page=<%=i %>'><%=i %></a></li>
-			<%			
-					}
-				}
-			%>
-				
-				
-				<li class="board_right"><a href="#">&#10095;</a></li>				
-			</ul>
-			
 		</div>
-
-</div>
 		
+	</div>
 		
 	<!-- 푸터영역 -->
 	<footer>
@@ -147,6 +127,7 @@
 	</footer>
 		
 </div>
-
+	
+	
 </body>
 </html>
