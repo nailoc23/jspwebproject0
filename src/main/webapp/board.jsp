@@ -76,8 +76,9 @@
 				<tbody>
 				
 			<%
+				String curPage = request.getParameter("page");
 				BoardDao bbsdao = new BoardDao();
-				ArrayList<BoardVo> result = bbsdao.getBoardListAll();
+				ArrayList<BoardVo> result = bbsdao.getBoardListAll(curPage);
 				//out.println(result.size());
 				for(int i=0; i<result.size(); i++) {
 					BoardVo eachvo = result.get(i);
@@ -111,10 +112,19 @@
 			
 			<ul class="board_pages">
 				<li class="board_left"><a href="#">&#10094;</a></li>
-				<li class="board_page"><a href="#" class="active">1</a></li>
-				<li class="board_page"><a href="#">2</a></li>
-				<li class="board_right"><a href="#">&#10095;</a></li>
 				
+			<%
+				int cntperpage = 10;
+				int totpage = bbsdao.calTotPage();
+				for(int i=1; i<=totpage; i++) {
+			%>
+				<li class='board_page'><a href='board.jsp?page=<%=i %>' class='active'><%=i %></a></li>
+			<%
+				}
+			%>
+				
+				
+				<li class="board_right"><a href="#">&#10095;</a></li>				
 			</ul>
 			
 		</div>

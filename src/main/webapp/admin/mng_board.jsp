@@ -130,6 +130,23 @@
                 
                                 </div>
                                 
+                                <div class="d-flex justify-content-center">
+                                
+	                                <div class="mt-12">
+		                                <div class="btn-group ml-2 mb-1" role="group" aria-label="First group">
+		                                    <button type="button" class="btn btn-primary">&#10094;</button>
+		
+		                                    <button type="button" class="btn btn-secondary">1</button>
+		                                    <button type="button" class="btn btn-secondary">2</button>
+		                                    <button type="button" class="btn btn-secondary">3</button>
+		                                    <button type="button" class="btn btn-secondary">4</button>
+		                                    
+		                                    <button type="button" class="btn btn-primary">&#10095;</button>                                
+		                                </div>
+	                                </div>
+	                                
+	                            </div>
+                                
                             </div>
 
                             <button type="button" class="btn btn-primary" onclick="location.href='mng_bbswrite.html'">글쓰기</button>

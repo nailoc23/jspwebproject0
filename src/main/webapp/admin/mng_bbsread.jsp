@@ -148,12 +148,13 @@
                                         
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">첨부파일</label>
-                                            <br><%= filesvo.getFilename() %> &nbsp; &nbsp; <button type="button" class="btn btn-primary">파일삭제</button>
+                                            <br><%= filesvo.getFilename() %> &nbsp; &nbsp; 
+                                            <!-- <button type="button" class="btn btn-primary">파일삭제</button> -->
                                             <input type="file" class="form-control" id="exampleFormControlInput1" name="filename">
                                         </div>
                                         
                                         <button type="submit" class="btn btn-primary">글수정</button>
-                                        <button type="button" class="btn btn-primary" onclick="del_bbs();">글삭제</button>
+                                        <button type="button" class="btn btn-primary" onclick="del_bbs(<%= tempvo.getNo() %>);">글삭제</button>
                                         <button type="button" class="btn btn-primary" onclick="location.href='mng_board.jsp'">목록</button>
                                     </form>
                                 </div>
@@ -166,10 +167,11 @@
     </div>
     <script src="../js/admin.js"></script>
     <script>
-    	function del_bbs() {
-    		ok = confirm('해당글을 삭제하시겠습니까?');
+    	function del_bbs(tempno) {
+    		ok = confirm('해당글을 삭제하시겠습니까?'); // 확인-true, 취소-false
     		if(ok==true) {
-    			location.href='mng_bbsdel.jsp';
+    			//alert(tempno);
+    			location.href='mng_bbsdel.jsp?no='+tempno;
     		}else{
     			alert('삭제 취소되었습니다!');
     		}

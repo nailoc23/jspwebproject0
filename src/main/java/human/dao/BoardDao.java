@@ -45,17 +45,20 @@ public class BoardDao {
 	}
 	
 	// 게시판 전체 목록 가져오기
-	public ArrayList<BoardVo> getBoardListAll() {		
+	public ArrayList<BoardVo> getBoardListAll(String curPage) {		
 		
 		System.out.println("게시판 전체 목록 가져오기");
+		
 		ArrayList<BoardVo> boardList = new ArrayList<BoardVo>();
 		
 		getConnect();
 		
 		try {
-			stmt = conn.createStatement();
-			String sql = "SELECT no, subject, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate, hit FROM bo_notice ORDER BY no DESC";
-			rs = stmt.executeQuery(sql);
+			//stmt = conn.createStatement();
+			String sql = "SELECT no, subject, TO_CHAR(regdate, 'yyyy-MM-DD') as regdate, hit FROM bo_notice ORDER BY no DESC OFFSET 10*(?-1) ROWS FETCH NEXT 10 ROWS ONLY";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.valueOf(curPage));
+			rs = pstmt.executeQuery();
 			while(rs.next() ) {
 				BoardVo tempvo = new BoardVo();
 				tempvo.setNo(rs.getInt("no"));
@@ -157,6 +160,71 @@ public class BoardDao {
 		}finally {
 			closeConn();
 		}
+		
+		return rst;
+	}
+	
+	// 게시글을 삭제하기
+	public int delBoardByNO(String no) {
+		System.out.println("게시글을 삭제하기");
+		int rst = 0;
+		int rst2 = 0;
+		
+		try {
+			getConnect();
+			
+			conn.setAutoCommit(false); // 자동 컴밋 잠시 멈춤
+			String sql = "DELETE FROM BO_NOTICE WHERE no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.valueOf(no)); // 문자를 숫자로 변환
+			rst = pstmt.executeUpdate(); // 1-성공, 0-실패
+			
+			String sql2 = "DELETE FROM BO_NOTICE_FILE WHERE no=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setInt(1, Integer.valueOf(no)); // 문자를 숫자로 변환
+			rst2 = pstmt2.executeUpdate();         // 첨부파일이 없으면 삭제해도 0
+			
+			conn.commit();
+		}catch(SQLException se) {
+			System.out.println("delBoardByNO 쿼리에러: " + se.getMessage());	
+			try {
+				conn.rollback();
+			}catch(Exception e) {
+				System.out.println("롤백 에러: " + e.getMessage());
+			}
+		}finally {
+			closeConn();
+		}
+				
+		return rst+rst2; // 2-성공, 1-첨부파일, 0-실패
+	}
+	
+	// 게시글의 총 페이지 갯수 계산하기
+	public int calTotPage() {
+		System.out.println("게시글의 총 페이지 갯수 계산하기");
+		int rst = 0;
+		int tot = 0;
+		
+		getConnect();
+		
+		try {
+			String sql = "SELECT COUNT(*) AS CNT FROM BO_NOTICE";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next() ) {
+				tot = rs.getInt("CNT");
+			}
+			rst = tot / 10;
+			//rst = (tot % 10) == 0 ? rst : rst+1;
+			if(tot%10 != 0) {
+				rst = rst + 1;
+			}
+		}catch(SQLException se) {
+			
+		}finally {
+			closeConn();
+		}
+		
 		
 		return rst;
 	}

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="human.dao.BoardDao" %>
-<%@ page import="human.vo.BoardVo" %>  
+<%@ page import="human.vo.BoardVo" %>
+<%@ page import="human.dao.FilesDao" %>
+<%@ page import="human.vo.FilesVo" %>    
     
 <!DOCTYPE html>
 <html>
@@ -52,11 +54,15 @@
 	</header>
 		
 	<%
-		String no = request.getParameter("no"); 
+		String no = request.getParameter("no");
+	
 		BoardVo tempvo = new BoardVo();
-		BoardDao bbsdao = new BoardDao();
-		
+		BoardDao bbsdao = new BoardDao();		
 		tempvo = bbsdao.readBoardByNo(no);
+		
+		FilesVo filesvo = new FilesVo();
+		FilesDao filedao = new FilesDao();
+		filesvo = filedao.readFilesByNo(no);
 		
 	%>
 		
@@ -107,7 +113,7 @@
 				</tr>
 				<tr>
 					<th class="post_file">첨부파일</th>
-					<td colspan="5">Book.xlsx</td>
+					<td colspan="5"><a href="filedown.jsp?filename=<%= filesvo.getFilename() %>"><%= filesvo.getFilename() %></a></td>
 				</tr>
 				</tbody>
 				
